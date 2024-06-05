@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         Menu menu = new Menu();
         try (var connection =  DB.connect()){
-            menu.Start();
+            menu.start();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }

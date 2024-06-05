@@ -49,4 +49,9 @@ public class Train {
         this.time = time;
         this.arrival = arrival;
     }
+    @Override
+    public String toString() {
+        return "From: " + from + ", To:" + to + ", departure date:" + date + ", leave:" + time + ", arrive:" + arrival;
+    }
+
 }
