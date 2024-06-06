@@ -79,7 +79,7 @@ public class TrainService {
         System.out.println("Choose the ID of your train:");
         return Integer.parseInt(sc.nextLine());
     }
-
+    // ResultSet function for easier use
     public void resultSet(PreparedStatement statement) throws SQLException {
         ResultSet resultSet = statement.executeQuery();
         int count = 0;

@@ -34,8 +34,9 @@ public class TicketService extends Ticket {
                 System.err.println("Price not found for train ID: " + trainId);
                 return;
             }
-            Ticket ticket = new Ticket(trainId, 1, totalPrice);
-            ticketCart.add(ticket);   // Adding the ticked to the cart
+            Ticket ticket = new Ticket(trainId, 1, totalPrice); // creating ticket
+            ticketCart.add(ticket);   // Adding the ticket to the cart
+
             String insertTicketSql = "INSERT INTO tickets(train_id, user_id, total_price) VALUES (?, ?, ?)";
             try (PreparedStatement statement = connection.prepareStatement(insertTicketSql)) {
                 statement.setInt(1, trainId);
