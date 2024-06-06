@@ -12,8 +12,6 @@ public class DatabaseConfig {
                 System.out.println("Sorry, unable to find db.properties");
                 System.exit(1);
             }
-
-            // Load the properties file
             properties.load(input);
         } catch (IOException e) {
             e.printStackTrace();

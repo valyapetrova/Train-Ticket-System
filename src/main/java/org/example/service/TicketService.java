@@ -34,6 +34,8 @@ public class TicketService extends Ticket {
                 System.err.println("Price not found for train ID: " + trainId);
                 return;
             }
+            Ticket ticket = new Ticket(trainId, 1, totalPrice);
+            ticketCart.add(ticket);   // Adding the ticked to the cart
             String insertTicketSql = "INSERT INTO tickets(train_id, user_id, total_price) VALUES (?, ?, ?)";
             try (PreparedStatement statement = connection.prepareStatement(insertTicketSql)) {
                 statement.setInt(1, trainId);
@@ -47,5 +49,17 @@ public class TicketService extends Ticket {
         } catch (SQLException e) {
             System.err.println("Error retrieving price: " + e.getMessage());
         }
+        for (Ticket ticket : ticketCart){
+            System.out.println(ticket);
+        }
+    }
+
+    // Calculating the total sum of all tickets in the cart
+    public void calculateTotalPriceTicket(int trainId){
+        double totalTicketPrice = 0;
+        for (Ticket ticket : ticketCart){
+            totalTicketPrice += ticket.getTotalPrice();
+        }
+        System.out.printf("Total price is: %.2f lv.", totalTicketPrice);
     }
 }

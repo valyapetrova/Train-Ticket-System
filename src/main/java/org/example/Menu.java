@@ -48,6 +48,14 @@ public class Menu {
             case "trains" -> {
                 int trainId = trainService.filterTrains();
                 ticketService.createTicket(trainId);
+                System.out.println("More tickets? [Y][N]");
+                if(sc.nextLine().equals("Y")){
+                    trainId = trainService.filterTrains();
+                    ticketService.createTicket(trainId);
+                    ticketService.calculateTotalPriceTicket(trainId);
+                }else{
+                    System.out.println("Bye!");
+                }
             }
             default -> {
                 System.out.println("Would you like to return to the main menu? [Y][N]");
