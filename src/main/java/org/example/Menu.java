@@ -52,7 +52,8 @@ public class Menu {
                 if(sc.nextLine().equals("Y")){
                     trainId = trainService.filterTrains();
                     ticketService.createTicket(trainId);
-                    ticketService.calculateTotalPriceTicket(trainId);
+                    double totalPrice = ticketService.totalTicketPrice();
+                    ticketService.appliedDiscounts(totalPrice);
                 }else{
                     System.out.println("Bye!");
                 }

@@ -7,8 +7,11 @@ public class OldPeopleDiscount implements Discount{
     
     @Override
     public double calculatePrice(double price) {
+        double newPrice = 0;
         double discount = 0;
         discount = price*34/100;
-        return discount;
+        newPrice = price - discount;
+
+        return newPrice;
     }
 }

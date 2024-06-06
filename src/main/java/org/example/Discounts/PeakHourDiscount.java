@@ -13,13 +13,14 @@ public class PeakHourDiscount implements Discount {
         LocalTime currentTime = LocalTime.now();
         int hour = currentTime.getHour();
         int minute = currentTime.getMinute();
-        double discountPrice = 0;
+        double discount = 0;
         if ((hour == 9 && minute >= 30) || (hour >= 10 && hour <= 15) || (hour >= 19 && minute >= 30)) {
-            discountPrice = price * 0.05;
+            discount = price * 0.05;
+            price -= discount;
             System.out.println("You have 5% discount for your ticket!");
         }else{
             System.out.println("You don't have any discount at this time of the day :(");
         }
-        return discountPrice;
+        return price;
     }
 }
