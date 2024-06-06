@@ -19,8 +19,7 @@ public class TicketService extends Ticket {
     OldPeopleDiscount op = new OldPeopleDiscount();
     FamilyDiscount fm = new FamilyDiscount();
     Connection connection;
-    {
-        try {
+    {try {
             connection = DB.connect();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -66,7 +65,7 @@ public class TicketService extends Ticket {
         }
     }
 
-
+    // Discounts on the total price
     public void appliedDiscounts(double totalPrice){
         double discountPrice = 0;
         System.out.println("Do you have discount card?[Y][N]");
@@ -76,10 +75,10 @@ public class TicketService extends Ticket {
             if (discountCard != null && discountCard.getCardType() != null) {
                 if (discountCard.getCardType().equalsIgnoreCase("elderly")) {
                     discountPrice = op.calculatePrice(totalPrice); // Elderly discount applied
-                    System.out.printf("Total price is: %.2f lv.%n", pk.calculatePrice(discountPrice));
+                    System.out.printf("Total price is: %.2f lv.%n", pk.calculatePrice(discountPrice));   //peak hour discount
                 } else if (discountCard.getCardType().equalsIgnoreCase("family")) {
-                    discountPrice = op.calculatePrice(totalPrice); // Family discount applied
-                    System.out.printf("Total price is: %.2f lv.%n", pk.calculatePrice(discountPrice));
+                    discountPrice = fm.calculatePrice(totalPrice); // Family discount applied
+                    System.out.printf("Total price is: %.2f lv.%n", pk.calculatePrice(discountPrice));   //peak hour discount
                 } else {
                     System.out.printf("No discount applied. Total price is: %.2f lv.%n", totalPrice);
                 }

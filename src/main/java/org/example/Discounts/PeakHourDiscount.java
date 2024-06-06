@@ -19,7 +19,7 @@ public class PeakHourDiscount implements Discount {
             price -= discount;
             System.out.println("You have 5% discount for your ticket!");
         }else{
-            System.out.println("You don't have any discount at this time of the day :(");
+            System.out.println("You don't have peak hour discount at this time of the day :(");
         }
         return price;
     }

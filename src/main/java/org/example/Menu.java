@@ -17,76 +17,73 @@ public class Menu {
 
     public void start() throws SQLException {
         System.out.println("Welcome to Vals' railway station!");
-        System.out.println("[REGISTER] [LOGIN]\n[TICKETS] [TRAINS] [INFO]");
+        System.out.println("[REGISTER] [LOGIN]\n");
         String command = sc.nextLine();
         switch (command) {
-            case "register" -> {
-                try {
-                    db.registerUser();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+            case "register":
+                db.registerUser();
                 System.out.println("Would you like to login? [Y][N]");
-                if (sc.nextLine().equals("Y")){
-                    try {
-                        db.loginUser();
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
+                String answer = sc.nextLine();
+                if (answer.equalsIgnoreCase("Y")) {
+                    if (db.loginUser()) {
+                        welcomeLoggedUser();
+                    } else {
+                        System.out.println("Login failed. Please try again.");
                     }
                 }
-            }
-            case "login" -> {
-                try {
-                    db.loginUser();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                break;
+            case "login":
+                if(db.loginUser()){
+                    welcomeLoggedUser();
+                }else{
+                    System.out.println("error! try again!");
                 }
-                welcomeLoggedUser();
-
-            }
-            case "tickets" -> trainService.filterTrains();
-            case "trains" -> {
+                break;
+            default:
+                System.out.println("Would you like to return to the main menu? [Y][N]");
+                answer = sc.nextLine();
+                if (answer.equalsIgnoreCase("Y")) {
+                    start();
+                } else {
+                    System.out.println("Exiting program...");
+                }
+                break;
+        }
+    }
+    public void welcomeLoggedUser() throws SQLException {
+        System.out.println("[TICKETS] [TRAINS] [INFO]");
+        String command = sc.nextLine();
+        switch (command) {
+            case "tickets":
                 int trainId = trainService.filterTrains();
                 ticketService.createTicket(trainId);
                 System.out.println("More tickets? [Y][N]");
-                if(sc.nextLine().equals("Y")){
+                if (sc.nextLine().equalsIgnoreCase("Y")) {
                     trainId = trainService.filterTrains();
                     ticketService.createTicket(trainId);
                     double totalPrice = ticketService.totalTicketPrice();
                     ticketService.appliedDiscounts(totalPrice);
-                }else{
-                    System.out.println("Bye!");
+                } else {
+                    double totalPrice = ticketService.totalTicketPrice();
+                    ticketService.appliedDiscounts(totalPrice);
                 }
-            }
-            default -> {
+                break;
+
+            case "trains":
+                trainService.listTrains();
+                trainId = trainService.filterTrains();
+                ticketService.createTicket(trainId);
+                break;
+
+            default:
                 System.out.println("Would you like to return to the main menu? [Y][N]");
                 String answer = sc.nextLine();
-                if (answer.equals("Y")) {
+                if (answer.equalsIgnoreCase("Y")) {
                     start();
                 } else {
-                    break;
+                    System.out.println("Exiting program...");
                 }
-            }
+                break;
         }
-}
-        public void welcomeLoggedUser() throws SQLException {
-            System.out.println("[TICKETS] [TRAINS] [INFO]");
-            String command = sc.nextLine();
-            switch (command) {
-                case "tickets" -> System.out.println("a");
-                case "trains" -> {
-                    trainService.filterTrains();
-                    ticketService.createTicket(trainService.filterTrains());    // Takes the id of the chosen train
-                }
-                default -> {
-                    System.out.println("Would you like to return to the main menu? [Y][N]");
-                    String answer = sc.nextLine();
-                    if (answer.equals("Y")) {
-                        start();
-                    } else {
-                        break;
-                    }
-                }
-            }
-        }
+    }
 }

@@ -22,7 +22,6 @@ public class DB {
 
     public void registerUser() throws SQLException {
         Connection connection = connect();
-
         System.out.println("Welcome to User Registration!");
         System.out.println("Enter username: ");
         String username = sc.nextLine();
@@ -31,6 +30,16 @@ public class DB {
         System.out.println("Enter password: ");
         String password = sc.nextLine();
 
+        Regex regex = new Regex();
+        if (!regex.isValidEmail(email)) {
+            System.out.println("Invalid email format!");
+            return;
+        }
+        if (!regex.isValidPassword(password)) {
+            System.out.println("Invalid password format!");
+            return;
+        }
+
         String sql = "INSERT INTO users (username,email,password) VALUES (?, ?, ?)";
         PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -38,9 +47,7 @@ public class DB {
         statement.setString(2, email);
         statement.setString(3, password);
 
-        // Execute the insert statement
         int rowsAffected = statement.executeUpdate();
-
         if (rowsAffected > 0) {
             System.out.println("User registration successful!");
         } else {
@@ -48,7 +55,6 @@ public class DB {
         }
         statement.close();
         connection.close();
-        sc.close();
     }
 
     public boolean loginUser() throws SQLException {
@@ -64,9 +70,7 @@ public class DB {
         statement.setString(1, username);
         statement.setString(2, password);
         ResultSet resultSet = statement.executeQuery();
-        // Check if a user record is found
         boolean loginSuccessful = resultSet.next();
-
         resultSet.close();
         statement.close();
         connection.close();

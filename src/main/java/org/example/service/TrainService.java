@@ -48,7 +48,6 @@ public class TrainService {
             String filterBy = sc.nextLine().trim().toLowerCase();
             System.out.println("Enter filter value:");
             String filterValue = sc.nextLine();
-
             String sql = "";
             switch (filterBy) {
                 case "from":
@@ -79,6 +78,7 @@ public class TrainService {
         System.out.println("Choose the ID of your train:");
         return Integer.parseInt(sc.nextLine());
     }
+
     // ResultSet function for easier use
     public void resultSet(PreparedStatement statement) throws SQLException {
         ResultSet resultSet = statement.executeQuery();
