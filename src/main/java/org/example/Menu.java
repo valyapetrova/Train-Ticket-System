@@ -46,7 +46,8 @@ public class Menu {
             }
             case "tickets" -> trainService.filterTrains();
             case "trains" -> {
-                trainService.filterTrains();
+                int trainId = trainService.filterTrains();
+                ticketService.createTicket(trainId);
             }
             default -> {
                 System.out.println("Would you like to return to the main menu? [Y][N]");

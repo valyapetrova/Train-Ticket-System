@@ -73,10 +73,9 @@ public class TrainService {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, filterValue);
                 resultSet(statement);
-                break;  // Exit the loop when the result set is retrieved
+                break;
             }
         }
-        // Once the loop exits, prompt for train ID and return it
         System.out.println("Choose the ID of your train:");
         return Integer.parseInt(sc.nextLine());
     }
